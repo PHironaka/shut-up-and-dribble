@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5  Canvas Img Upload & Save</title>
+  
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+<div class="container">	
+
+  <img id="img-placeholder" style="display: none;" src="./images/lebron.jpg" alt="the imgg">
+
+<canvas id="memecanvas">
+  
+</canvas>
+
+<div class="scaletool">
+  Scale:<input id="scale" max="4" min="0.1" step="0.01" type="range" value="1" />
+</div>
+<div class="scaletool">
+  Rotate: <input id="rotate" max="180" min="-180" step="1" type="range" value="0" />
+</div>
+<div class="scaletool">
+  <input id="custom-text" style="width: 80%;" value="your message" type="text">
+</div>
+
+<div class="scaletool">
+textSize:<input type="range" id="textSize"
+ min="0"
+ max="200"
+ step="1"
+ value="50"/>
+</div>
+
+
+<div class="scaletool">
+  <input id="fileInput" name="imageLoader" type="file"></div>
+<div class="scaletool">
+  <a id="img-download" download="mobiforge-canvas.png"></a>Download image OR<br>
+  <input id="save" value="Save online" type="checkbox"></div>
+  
+
+</div>
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

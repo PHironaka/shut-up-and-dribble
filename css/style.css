@@ -1,0 +1,29 @@
+
+#memecanvas{
+/*   background:url('https://scontent-lax3-2.cdninstagram.com/vp/6d19f75f7b9ebd1aead9e70b54ede0fb/5B071EA4/t51.2885-15/e35/27880426_121440002012429_2063531837820502016_n.jpg'); */
+  margin:auto;
+  width:100%;
+  min-width:300px;
+}
+.scaletool{
+ /*background-color:orange;*/
+  border:1px pink;
+  border-bottom-style:dotted;
+  margin:0 10%;
+  padding:10px;
+}
+
+#img-placeholder {
+	max-width: 500px;
+}
+
+.container {
+	    max-width: 63em;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 0 auto;
+    height: 100%;
+    position: relative;
+    padding: 0 2.55555em;
+    overflow: hidden;
+}
