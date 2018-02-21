@@ -14,16 +14,15 @@ var canvas;
   window.onload = function() {
 
 
-    prepareExample();
+    willNotDribble();
   }
 
-  function prepareExample() {
+  function willNotDribble() {
     img = document.getElementById('img-placeholder');
-    
     var deviceWidth = window.innerWidth;;
       canvasWidth = Math.min(600, deviceWidth-20);
   canvasHeight = Math.min(480, deviceWidth-20);
-    canvas = document.getElementById('memecanvas');
+  canvas = document.getElementById('memecanvas');
   canvas.width = canvasWidth;
   canvas.height = canvasHeight;
   
@@ -34,14 +33,7 @@ var canvas;
      y = canvas.height/2 - img.height/2;
 
     ctx.drawImage(img, x, y);
-    
-    ctx.textAlign = 'center';
-    ctx.lineWidth  = 10;
-    ctx.font = '20pt impact';
-    ctx.strokeStyle = 'black';
-    ctx.fillStyle = 'white';
-    ctx.lineJoin = 'round';
-    doTransform();
+   
   
 
     fileInput = document.getElementById('fileInput');
@@ -70,37 +62,25 @@ var canvas;
    }, false);
 
    var controls = document.getElementById('controls');
-   var save = document.getElementById('save');
-   save.addEventListener('click', function(e) {
-     controls.style.display = 'none';
-     document.getElementById('spinner-div').style.display='inline';
-     var data = canvas.toDataURL();
-
-     request = $.ajax({
-          url: "/meme/save",
-          type: "post",
-          data: data
-      });
-
-      // callback handler that will be called on success
-      request.done(function (response, textStatus, jqXHR){
-          // log a message to the console
-          window.location.href = '/meme/view/'+response;
-      });
-    }, false);
-
-    scale = document.getElementById('scale');
+   
+   var scale = document.getElementById('scale');
     scale.addEventListener('change', doTransform, false);
 
-    rotate = document.getElementById('rotate');
+   var rotate = document.getElementById('rotate');
     rotate.addEventListener('change', doTransform, false);
 
-    download = document.getElementById('img-download');
-    download.addEventListener('click', prepareDownload, false);
 
-    
+function download() {
+    var dt = canvas.toDataURL("image/jpg");
+    this.href = dt; //this may not work in the future..
+}
+document.getElementById('download').addEventListener('click', download, false);
+
 
   }
+
+willNotDribble();
+
 
   function doTransform() {
     ctx.save();
@@ -125,34 +105,9 @@ var canvas;
 
     ctx.restore();
 
-    text = document.getElementById('custom-text').value;
-     text = text.toUpperCase();
-     wrapText(ctx, text, canvas.width/2, canvas.height - canvas.height/4.5, canvasWidth-canvasWidth/3, 30);
-    /*text=document.getElementById('custom-text').value;*/
-  }
+}
 
-
-  function prepareDownload() {
-    var data = canvas.toDataURL();
-    download.href = data;
-    //準備下載
-  }
 
  
-  function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-    var words = text.split(' ');
-    var line = '';
-/*function warpText(ctx,text,x,y,maxWidth,lineHeight){var words=text.split('');var line='';for(var n=0;n<word.length;n++){var testLine=line+words[n]+'';var metrics=ctx.measureText(testLine);var testWidth=met}}*/
-    for(var n = 0; n < words.length; n++) { var testLine = line + words[n] + ' '; var metrics = ctx.measureText(testLine); var testWidth = metrics.width; if (testWidth > maxWidth && n > 0) {
-        ctx.strokeText(line, x, y);
-        ctx.fillText(line, x, y);
-        line = words[n] + ' ';
-        y += lineHeight;
-      }
-      else {
-        line = testLine;
-      }
-    }
-    ctx.strokeText(line, x, y);
-    ctx.fillText(line, x, y);
-  }
+
+ 
