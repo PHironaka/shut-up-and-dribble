@@ -1,58 +1,158 @@
-<!DOCTYPE html>
-<html lang="en" >
+<html>
+	<head>
+		<title>I will not shut up and listen</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<link rel="stylesheet" href="style.css"/>
+	</head>
+	<body>
+	
 
-<head>
-  <meta charset="UTF-8">
-  <title>HTML5  Canvas Img Upload & Save</title>
-  
-  
-  <link href="https://fonts.googleapis.com/css?family=Chivo:400,900" rel="stylesheet">
+	<div class="container">
+	
+	
+		
+		<div class="row">
+			<div class="col-md-12">
+			
+				<div style="position: relative;"><!-- BEGIN: Canvas rendering of generated Meme -->
+				<canvas id="meme" class="watermark_img img-thumbnail img-fluid">
 
-      <link rel="stylesheet" href="css/style.css">
+					Unfortunately your browser does not support canvas.
+				</canvas>
 
-
-</head>
-
-<body>
-
-<div class="container">	
-
-	<h1>I will Not Shut up and dribble</h1>
-
-  <img id="img-placeholder" style="display: none;" src="https://peterhironaka.com/uploads/space-pic.jpg" alt="the imgg">
-
-<canvas id="memecanvas"></canvas>
-
-<div class="scaletool">
-  Scale:<input id="scale" max="4" min="0.1" step="0.01" type="range" value="1" />
-</div>
-<div class="scaletool">
-  Rotate: <input id="rotate" max="180" min="-180" step="1" type="range" value="0" />
-</div>
-<!-- <div class="scaletool">
-  <input id="custom-text" style="width: 80%;" value="I will not shut up and Dribble" type="text">
-</div> -->
-
-<!-- <div class="scaletool">
-textSize:<input type="range" id="textSize"
- min="0"
- max="200"
- step="1"
- value="50"/>
-</div>
+				  <img src="image.png" 
+       style="position: absolute; 
+              left: 0px; 
+              top:0px;
+              z-index: 2;
+              width: 300px;
+       " /></div>
+				<!-- END: Canvas rendering of generated Meme -->
+			
+			
+				<a href="javascript:;" class="btn btn-primary btn-block" id="download_meme">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Download
+				</a>
+			
+			
+				<img id="start-image" src="lebron.jpg" class="watermark_img" alt="" />
+			</div>
+			<div class="col-md-12">
+			
+				<div class="row">
+					<div class="col-md-12">
+					
+						<div class="input-group">
+							<span class="input-group-addon">Image:</span>
+							<input type="file" class="form-control" id="imgInp" />
+						</div>
+						
+					</div>
+				</div>
+				
+				
+				
+				
+				
+				<div class="form-group" style="display: none">
+<!-- 
+					<input id="text_top" class="form-control form-control-lg" type="image"
+       src="https://raw.githubusercontent.com/mdn/learning-area/master/html/forms/image-type-example/login.png">
  -->
+					<input type="image" class="form-control form-control-lg" src="image.png" id="text_top" />
+				</div>
+				
+				<div class="form-group">
+					<div class="row">
+						<label class="control-label col-md-3" for="text_top_offset">Offset from top:</label>
+						<div class="col-md-7">
+							<input style="width:100%" id="text_top_offset" type="range" min="0" max="500" value="50"/>
+						</div>
+						<div class="col-md-2 setting-value">
+							<span id="text_top_offset__val">50</span>px
+						</div>
+					</div>
+				</div>
+				
 
-<div class="scaletool"><input id="fileInput" name="imageLoader" type="file"></div>
-<a id="download" download="CanvasDemo.png">Download as image</a>
+				<div class="card">
+				
+					<div class="card-body">
+					
+						<div class="row">
+							<div class="col-md-12">
+							
+								<div class="form-group">
+									<div class="row">
+										<label class="control-label col-md-12" for="canvas_size">Meme size:</label>
+										<div class="col-md-12">
+											<input style="width:100%" id="canvas_size" type="range" min="0" max="1200" value="1200"/>
+										</div>
+										<div class="col-md-12 setting-value">
+											<span id="canvas_size__val">1200</span>px
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="row">
+										<label class="control-label col-md-3" for="text_font_size">Font size:</label>
+										<div class="col-md-7">
+											<input style="width:100%" id="text_font_size" type="range" min="0" max="72" value="28"/>
+										</div>
+								
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="row">
+										<label class="control-label col-md-3" for="text_line_height">Line height:</label>
+										<div class="col-md-7">
+											<input style="width:100%" id="text_line_height" type="range" min="0" max="100" value="15"/>
+										</div>
+										<div class="col-md-2 setting-value">
+											<span id="text_line_height__val">15</span>pt
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="row">
+										<label class="control-label col-md-3" for="text_stroke_width">Stroke width:</label>
+										<div class="col-md-7">
+											<input style="width:100%" id="text_stroke_width" type="range" min="0" max="20" value="4"/>
+										</div>
+										<div class="col-md-2 setting-value">
+											<span id="text_stroke_width__val">4</span>pt
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					
+					</div>
+				</div>
 
+				
+				
+			</div>
+		</div>
+		
+		
+	</div>
 
-</div>
+	
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+		<script src="app.js"></script>
 
-    <script  src="js/index.js"></script>
+	<script type="text/javascript" src="watermark.jquery.min.js"></script>
 
-
-
-
-</body>
-
+	
+	</body>
 </html>
