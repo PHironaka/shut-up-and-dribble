@@ -17,11 +17,7 @@ a {
 
 }
 
-#canvas {
- width: 100%;
- min-height: 400px;
- max-width: 600px;
-}
+
 
 a:hover {
  color: #777;
