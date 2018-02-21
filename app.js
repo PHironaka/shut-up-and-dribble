@@ -95,8 +95,8 @@ function Rot() {
 }
 
 function doCanvas() {
-  ctx.fillStyle = '#FF8F00';
-  ctx.fillRect(0, 0, 500, 500);
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, 600, 600);
 
 };
 
@@ -121,4 +121,4 @@ function download() {
   var dt = canvas.toDataURL('image/jpeg');
   this.href = dt;
 };
-downloadLnk.addEventListener('click', download, false);
+asset.addEventListener('click', download, false);

@@ -3,19 +3,30 @@
 		<title>I will not shut up and listen</title>
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500" rel="stylesheet">
+
 		<link rel="stylesheet" href="style.css"/>
 	</head>
 	<body onload="doCanvas()">
 		<div class="container">
-  <input type="file" name="img" id="uploadimage">
 
-
- <a href="Javascript:but('1')"> Stamp It </a>
-
-  </br>
+<h2>#iwillnotshutupanddribble</h2>
   <canvas id="canvas" width="600" height="600" ;></canvas>
 
-  <a id="downloadLnk" download="img.jpg">download</a> 
+  <div class="create-poster">
+  	 <input type="file" name="img" id="uploadimage">
+
+  	 <div class="create-poster--file">
+  	 	 <a class="stamp" href="Javascript:but('1')"> Stamp It </a>
+  	 	<a id="asset" download="img.jpg">download</a> 
+  	 </div>
+	
+  </div>
+
+  <footer>
+  	<small>Copyright @hironaka</small>
+  </footer>
+ 
 </div>
   <script src="app.js"></script>
 </body>
