@@ -4,6 +4,12 @@ body {
 
 .container {max-width:730px;}
 
+
+a#downloadLnk {
+  cursor: pointer;
+}
+
+
 img#start-image {
 	position: absolute;
 	left: -10000px;
@@ -57,3 +63,6 @@ img#start-image {
 #scale:active::-webkit-slider-thumb, #rotate:active::-webkit-slider-thumb {
   background: #ffffff;
 }
+
+
+

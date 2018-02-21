@@ -1,186 +1,124 @@
-$(document).ready(function(){
+var img;
+var imgW;
+var tttRotate = 0;
+var tttScale = 1;
+var canvas = document.getElementById('canvas'),
+  ctx = canvas.getContext('2d');
+var x;
+var y;
+var width;
+var height;
+var tttLong = 0;
+var tttAlt = 0;
 
-	var canvas = document.getElementById('meme');
-	ctx = canvas.getContext('2d');
-
-
-	
-	// core drawing function
-	var drawMeme = function() {
-		var img = document.getElementById('start-image');
-
-		var fontSize = parseInt( $('#text_font_size').val() );
-		
-		var memeSize = parseInt( $('#canvas_size').val() );
-		
-		// set form field properties
-		$('#text_top_offset').attr('max', memeSize);
-		$('#text_bottom_offset').attr('max', memeSize);
-		
-		// initialize canvas element with desired dimensions
-		canvas.width = memeSize;
-		canvas.height = memeSize;
-		
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		// calculate minimum cropping dimension
-		var croppingDimension = img.height;
-		if( img.width < croppingDimension ){
-			croppingDimension = img.width;
-		}
-		
-		ctx.drawImage(img, 0, 0, croppingDimension, croppingDimension, 0, 0, memeSize, memeSize);
-
-		
-		ctx.lineWidth  = parseInt( $('#text_stroke_width').val() );
-		ctx.font = fontSize + 'pt sans-serif';
-		ctx.strokeStyle = 'black';
-		ctx.fillStyle = 'white';
-		ctx.textAlign = 'center';
-		ctx.textBaseline = 'top';
-
-		var text1 = $('#text_top').val();
-		x = memeSize / 2;
-		y = parseInt( $('#text_top_offset').val() );
-
-		var lineHeight = fontSize + parseInt( $('#text_line_height').val() );
-		var maxTextAreaWidth = memeSize * 0.85;
-		
-		wrapText(ctx, text1, x, y, maxTextAreaWidth, lineHeight, false);
-
-		
-		ctx.textBaseline = 'bottom';
-		var text2 = $('#text_bottom').val();
-		text2 = text2.toUpperCase();
-		y = parseInt( $('#text_bottom_offset').val() );
-
-		wrapText(ctx, text2, x, y, maxTextAreaWidth, lineHeight, true);
-
-	};
+var qqq = 0;
+var www = 0;
+var eee = 0;
 
 
+function draw() {
+  ctx = document.getElementById('canvas').getContext('2d');
+  img = new Image();
+  var f = document.getElementById("uploadimage").files[0],
+    url = window.zURL || window.URL,
+    src = url.createObjectURL(f);
+  img.src = src;
+
+  img.onload = function() {
+
+    ctx.scale((canvas.width / img.width), (canvas.width / img.width));
+
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+  };
+};
+document.getElementById("uploadimage").addEventListener("change", draw, false)
+
+function Move(a) {
+  switch (a) {
+
+    case 'left':
+      tttAlt = tttAlt - 50;
+      break;
+    case 'right':
+      tttAlt = tttAlt + 50;
+      break;
+    case 'down':
+      tttLong = tttLong + 50;
+      break;
+    case 'up':
+      tttLong = tttLong - 50;
+      break;
 
 
-	
-	// build inner container for wrapping text inside
-	var wrapText = function(context, text, x, y, maxWidth, lineHeight, fromBottom) {
-		var pushMethod = (fromBottom) ? 'unshift' : 'push';
+    case 'plus':
+      if (tttScale > 2) {
+        tttScale = 1;
+      }
+      tttScale = tttScale + 0.05;
+      break;
+    case 'mines':
+      if (tttScale < 0) {
+        tttScale = 1;
+      }
+      tttScale = tttScale - 0.05;
+      break;
+    default:
+      tttScale = 1;
+  }
+  ctx.save();
+  x = img.width / 2;
+  y = img.width / 2;
+  width = img.width;
+  height = img.height;
+  ctx.clearRect(0, 0, img.width, img.height);
+  ctx.scale(tttScale, tttScale);
+  ctx.translate(x + tttAlt, y + tttLong);
+  ctx.rotate(tttRotate);
+  ctx.drawImage(img, -width / 2, -height / 2, width, height);
+  ctx.restore();
+}
 
-		lineHeight = (fromBottom) ? -lineHeight : lineHeight;
+function Rot() {
 
-		var lines = [];
-		var y = y;
-		var line = '';
-		var words = text.split(' ');
+  ctx.save();
+  tttRotate += 90 / 57.2958;
+  x = img.width / 2;
+  y = img.width / 2;
+  width = img.width;
+  height = img.height;
+  ctx.clearRect(0, 0, width, height);
+  ctx.scale(tttScale, tttScale);
+  ctx.translate(x, y);
+  ctx.rotate(tttRotate);
+  ctx.drawImage(img, -width / 2, -height / 2, width, height);
+  ctx.restore();
+}
 
-		for (var n = 0; n < words.length; n++) {
-			var testLine = line + ' ' + words[n];
-			var metrics = context.measureText(testLine);
-			var testWidth = metrics.width;
+function doCanvas() {
+  ctx.fillStyle = '#FF8F00';
+  ctx.fillRect(0, 0, 500, 500);
 
-			if (testWidth > maxWidth) {
-				lines[pushMethod](line);
-				line = words[n] + ' ';
-			} else {
-				line = testLine;
-			}
-		}
-		lines[pushMethod](line);
+};
 
-		for (var k in lines) {
-			context.strokeText(lines[k], x, y + lineHeight * k);
-			context.fillText(lines[k], x, y + lineHeight * k);
-		}
-	};
-	
-	
-	
-	// read selected input image from upload field and display it in browser
-	$("#imgInp").change(function(){
-		var input = this;
-		
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			
-			reader.onload = function (e) {
-				$('#start-image').attr('src', e.target.result);
-			}
+function but(a) {
 
-			reader.readAsDataURL(input.files[0]);
-		}
-		
-		window.setTimeout(function(){
-			drawMeme();
-			$('#image_credit').hide();
-		}, 500);
-	});
+  switch (a) {
+    case '1':
+      flag = "https://peterhironaka.com/uploads/space-pic.jpg";
+      break;
+    default:
+      flag = "111";
+  }
+  imgW = new Image();
+  imgW.crossOrigin = "anonymous";
+  imgW.src = flag;
+  imgW.onload = function() {
+    ctx.drawImage(imgW, 0, 0, imgW.width, imgW.height, 0, 0, (imgW.width * canvas.height) / imgW.width, canvas.width);
+  }
+}
 
-	// register event listeners
-	
-	$(document).on('change keydown keyup', '#text_top', function() {
-		drawMeme();
-	});
-	
-	$(document).on('change keydown keyup', '#text_bottom', function() {
-		drawMeme();
-	});
-	
-	$(document).on('input change', '#text_top_offset', function() {
-		$('#text_top_offset__val').text( $(this).val() );
-		drawMeme();
-	});
-	
-	$(document).on('input change', '#text_bottom_offset', function() {
-		$('#text_bottom_offset__val').text( $(this).val() );
-		drawMeme();
-	});
-	
-	$(document).on('input change', '#text_font_size', function() {
-		$('#text_font_size__val').text( $(this).val() );
-		drawMeme();
-	});
-	
-	$(document).on('input change', '#text_line_height', function() {
-		$('#text_line_height__val').text( $(this).val() );
-		drawMeme();
-	});
-	
-	$(document).on('input change', '#text_stroke_width', function() {
-		$('#text_stroke_width__val').text( $(this).val() );
-		drawMeme();
-	});
-	
-	$(document).on('input change', '#canvas_size', function() {
-		$('#canvas_size__val').text( $(this).val() );
-		drawMeme();
-	});
-	
-	
-	$(function(){
- //add text water mark;	
- $('img.watermark_text').watermark({
-  text: 'IAMROHIT.IN',
-  textWidth: 100,
-  textColor: 'white'
- });
- //add image water mark
- $('img.watermark_img').watermark({
-  path: 'image.png'
- });	
-})
-
-
-	
-	// TODO: replace this with a server-side processing method 
-	$('#download_meme').click(function(e){
-		$(this).attr('href', canvas.toDataURL());
-		$(this).attr('download', 'lebron.png');
-	});
-
-	
-	// init at startup
-	window.setTimeout(function(){
-		drawMeme();
-	}, 100);
-
-});
+function download() {
+  var dt = canvas.toDataURL('image/jpeg');
+  this.href = dt;
+};
+downloadLnk.addEventListener('click', download, false);
