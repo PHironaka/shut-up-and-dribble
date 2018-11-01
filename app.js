@@ -104,7 +104,7 @@ function but(a) {
 
   switch (a) {
     case '1':
-      flag = "https://nifty-liskov-90a8d6.netlify.com/lebron.jpg";
+      flag = "https://nifty-liskov-90a8d6.netlify.com/I-AM-VOTING.png";
       break;
     default:
       flag = "111";
